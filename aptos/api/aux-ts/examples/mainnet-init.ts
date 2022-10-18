@@ -12,6 +12,7 @@ const moduleAuthority: AptosAccount = AptosAccount.fromAptosAccountObject({
   privateKeyHex,
 });
 
+const APT = "0x1::aptos_coin::AptosCoin";
 const USDC = "0x5e156f1207d0ebfa19a9eeff00d62a282278fb8719f4fab3a586a0a2c0fffbea::coin::T";
 const SOL = "0xdd89c0e695df0692205912fb69fc290418bed0dbe6e4573d744a6d5e6bab6c13::coin::T";
 const WETH = "0xcc8a89c8dce9693d354449f1f73e60e14e347417854f029db5bc8e7454008abb::coin::T";
@@ -36,6 +37,12 @@ const MARKETS = [
     baseLotSize: "0.01",
     quoteLotSize: "0.001",
   },
+  {
+    base: APT,
+    quote: USDC,
+    baseLotSize: "0.01",
+    quoteLotSize: "0.001",
+  },
 ];
 
 const POOLS = [
@@ -51,6 +58,11 @@ const POOLS = [
   },
   {
     base: SOL,
+    quote: USDC,
+    feeBps: "30",
+  },
+  {
+    base: APT,
     quote: USDC,
     feeBps: "30",
   },
