@@ -50,6 +50,12 @@ const MARKETS = [
     baseLotSize: "0.01",
     quoteLotSize: "0.001",
   },
+  {
+    base: USDA,
+    quote: USDC,
+    baseLotSize: "0.001",
+    quoteLotSize: "0.001",
+  },
 ];
 
 const POOLS = [
