@@ -20,6 +20,7 @@
     "start:devnet-clob-trader": "APTOS_PROFILE=devnet ts-node examples/devnet-clob-trader.ts",
     "start:devnet-clob-orders": "APTOS_PROFILE=devnet ts-node examples/devnet-clob-orders.ts",
     "start:graphql": "ts-node src/graphql/index.ts",
+    "setup-network": "ts-node scripts/init.ts",
     "restart:graphql": "nodemon --ignore src/indexer/data src/graphql/index.ts"
   },
   "dependencies": {
