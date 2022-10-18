@@ -1,5 +1,5 @@
 import { AptosAccount } from "aptos";
-import { DU, Market } from "../src";
+import { DU, Market, Pool } from "../src";
 import { AuxClient, getAptosProfile, Network } from "../src/client";
 
 const auxClient = AuxClient.create({
@@ -38,6 +38,24 @@ const MARKETS = [
   },
 ];
 
+const POOLS = [
+  {
+    base: WBTC,
+    quote: USDC,
+    feeBps: "30",
+  },
+  {
+    base: WETH,
+    quote: USDC,
+    feeBps: "30",
+  },
+  {
+    base: SOL,
+    quote: USDC,
+    feeBps: "30",
+  },
+];
+
 (async () => {
   for (const market of MARKETS) {
     await Market.create(auxClient, {
@@ -52,6 +70,17 @@ const MARKETS = [
         market.quote,
         DU(market.quoteLotSize)
       ),
+    });
+  }
+})();
+
+(async () => {
+  for (const pool of POOLS) {
+    await Pool.create(auxClient, {
+      sender: moduleAuthority,
+      coinTypeX: pool.base,
+      coinTypeY: pool.quote,
+      feePct: 0.0030,
     });
   }
 })();
