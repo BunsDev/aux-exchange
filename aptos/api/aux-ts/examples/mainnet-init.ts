@@ -110,7 +110,7 @@ const POOLS = [
       sender: moduleAuthority,
       coinTypeX: pool.base,
       coinTypeY: pool.quote,
-      feePct: 0.0030,
+      feePct: 0.10,
     });
   }
 })();
