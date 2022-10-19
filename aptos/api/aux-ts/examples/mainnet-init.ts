@@ -23,11 +23,7 @@ const MARKETS = [
   {
     base: WBTC,
     quote: USDC,
-<<<<<<< Updated upstream
-    baseLotSize: "0.00001",
-=======
     baseLotSize: "0.0001",
->>>>>>> Stashed changes
     quoteLotSize: "0.01",
   },
   {
@@ -57,13 +53,8 @@ const MARKETS = [
   {
     base: USDA,
     quote: USDC,
-<<<<<<< Updated upstream
-    baseLotSize: "0.001",
-    quoteLotSize: "0.001",
-=======
     baseLotSize: "0.1",
     quoteLotSize: "0.0001",
->>>>>>> Stashed changes
   },
 ];
 
@@ -71,47 +62,27 @@ const POOLS = [
   {
     base: WBTC,
     quote: USDC,
-<<<<<<< Updated upstream
-    feeBps: "30",
-=======
     feeBps: "10",
->>>>>>> Stashed changes
   },
   {
     base: WETH,
     quote: USDC,
-<<<<<<< Updated upstream
-    feeBps: "30",
-=======
     feeBps: "10",
->>>>>>> Stashed changes
   },
   {
     base: WETH,
     quote: USDA,
-<<<<<<< Updated upstream
-    feeBps: "30",
-=======
     feeBps: "10",
->>>>>>> Stashed changes
   },
   {
     base: SOL,
     quote: USDC,
-<<<<<<< Updated upstream
-    feeBps: "30",
-=======
     feeBps: "10",
->>>>>>> Stashed changes
   },
   {
     base: APT,
     quote: USDC,
-<<<<<<< Updated upstream
-    feeBps: "30",
-=======
     feeBps: "10",
->>>>>>> Stashed changes
   },
 ];
 
