@@ -2892,6 +2892,7 @@ module aux::amm {
             assert!(y_reserve == 4000, ETEST_FAILED);
             assert!(pool_lp_au == 2000, ETEST_FAILED);
         };
+
         aux_bal = aux_bal - 1000;
         test_bal = test_bal - 4000;
         assert!(vault::balance<AuxCoin>(sender_addr) == (aux_bal as u128), ETEST_FAILED);
@@ -2948,4 +2949,50 @@ module aux::amm {
         };
     }
 
+    #[expected_failure]
+    #[test(sender = @0x5e7c3, aptos_framework = @0x1)]
+    fun test_add_liquidity_with_vault_then_withdraw(sender: &signer, aptos_framework: &signer) acquires Pool {
+        timestamp::set_time_has_started_for_testing(aptos_framework);
+
+        let sender_addr = signer::address_of(sender);
+
+        setup_pool_for_test(sender, 0, 10000, 10000);
+        vault::create_vault_for_test(sender);
+        vault::create_aux_account(sender);
+        vault::deposit<AuxCoin>(sender, sender_addr, 1000);
+        vault::deposit<AuxTestCoin>(sender, sender_addr, 4000);
+        let aux_bal = vault::balance<AuxCoin>(sender_addr);
+        let test_bal = vault::balance<AuxTestCoin>(sender_addr);
+
+        {
+            let pool = borrow_global<Pool<AuxCoin, AuxTestCoin>>(@aux);
+            let x_reserve = coin::value(&pool.x_reserve);
+            let y_reserve = coin::value(&pool.y_reserve);
+            let pool_lp_au = option::get_with_default(&coin::supply<LP<AuxCoin, AuxTestCoin>>(), 0);
+            assert!(x_reserve == 0, ETEST_FAILED);
+            assert!(y_reserve == 0, ETEST_FAILED);
+            assert!(pool_lp_au == 0, ETEST_FAILED);
+        };
+
+        let _ = sender_addr;
+        add_liquidity_with_vault<AuxCoin, AuxTestCoin>(sender, 1000, 4000, 0);
+        {
+            let pool = borrow_global<Pool<AuxCoin, AuxTestCoin>>(@aux);
+            let x_reserve = coin::value(&pool.x_reserve);
+            let y_reserve = coin::value(&pool.y_reserve);
+            let pool_lp_au = option::get_with_default(&coin::supply<LP<AuxCoin, AuxTestCoin>>(), 0);
+            assert!(x_reserve == 1000, ETEST_FAILED);
+            assert!(y_reserve == 4000, ETEST_FAILED);
+            assert!(pool_lp_au == 2000, ETEST_FAILED);
+        };
+
+        aux_bal = aux_bal - 1000;
+        test_bal = test_bal - 4000;
+        assert!(vault::balance<AuxCoin>(sender_addr) == (aux_bal as u128), ETEST_FAILED);
+        assert!(vault::balance<AuxTestCoin>(sender_addr) == (test_bal as u128), ETEST_FAILED);
+        assert!(vault::balance<LP<AuxCoin, AuxTestCoin>>(sender_addr) == (2000 - MIN_LIQUIDITY as u128),
+                ETEST_FAILED);
+
+        vault::withdraw<AuxTestCoin>(sender, 4000);
+    }
 }
